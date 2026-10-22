@@ -3,7 +3,8 @@ using UnityEngine;
 public class Platform : MonoBehaviour
 {
     public GameObject[] obstacles;
-    public GameObject coin;
+
+    public GameObject[] coins;
 
     public float obstaclesRatio = 0.3f;
 
@@ -25,6 +26,11 @@ public class Platform : MonoBehaviour
         foreach (GameObject obstacle in obstacles)
         {
             obstacle.SetActive(Random.value < obstaclesRatio);
+        }
+
+        foreach (GameObject coin in coins)
+        {
+            coin.SetActive(true);
         }
     }
 
