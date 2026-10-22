@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlatformSpawner : MonoBehaviour
 {
-    public GameObject platformPrefab;
+    public GameObject[] platformPrefabs;
     public int initCount = 5;
 
     private GameObject[] platforms;
@@ -24,7 +24,8 @@ public class PlatformSpawner : MonoBehaviour
         platforms = new GameObject[initCount];
         for (int i = 0; i < platforms.Length; ++i)
         {
-            platforms[i] = Instantiate(platformPrefab);
+            int randomIndex = Random.Range(0, platformPrefabs.Length);
+            platforms[i] = Instantiate(platformPrefabs[randomIndex]);
             platforms[i].SetActive(false);
         }
     }

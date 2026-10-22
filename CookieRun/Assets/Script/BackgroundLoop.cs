@@ -4,7 +4,7 @@ public class BackgroundLoop : MonoBehaviour
 {
     public float width = 20.48f;
 
-    public void Update()
+    private void Update()
     {
         if (transform.position.x <= -width)
         {

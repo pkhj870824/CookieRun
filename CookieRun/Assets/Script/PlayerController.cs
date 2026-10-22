@@ -33,13 +33,13 @@ public class PlayerController : MonoBehaviour
     [Header("사망 처리")]
     [SerializeField]
     private AudioSource dieSound;
-
-
+    private GameManager gameManager;
 
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.tag == "Platform")
+        if (collision.collider.tag == "Platform" &&
+        collision.contacts[0].normal.y > 0.7f)
         {
             isGrounded = true;
             jumpCount = 0;
@@ -60,6 +60,9 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         circle = GetComponent<CircleCollider2D>();
+        GameObject findGo = GameObject.FindWithTag("GameController");
+        gameManager = findGo.GetComponent<GameManager>();
+
     }
     private void Update()
     {
@@ -101,6 +104,8 @@ public class PlayerController : MonoBehaviour
         animator.SetTrigger("Die");
         dieSound.Play();
         rb.simulated = false;
+
+        gameManager.OnplayerDead();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -108,6 +113,12 @@ public class PlayerController : MonoBehaviour
         if (collision.tag == "Die")
         {
             Die();
+        }
+
+        if (collision.CompareTag("Coin"))
+        {
+            gameManager.Addscore(1);
+            collision.gameObject.SetActive(false);
         }
 
     }
